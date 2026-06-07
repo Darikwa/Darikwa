@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grok Picture &rarr; Video</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>" />
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>🎬 Picture <span class="arrow">&rarr;</span> Video</h1>
+      <p class="subtitle">Animate a still image into a short clip with Grok Imagine.</p>
+      <p id="mockBanner" class="mock-banner" hidden>
+        ⚠️ Running in <strong>mock mode</strong> — set <code>XAI_API_KEY</code> to generate real videos.
+      </p>
+    </header>
+
+    <form id="genForm">
+      <!-- Drop zone -->
+      <label id="dropZone" class="dropzone" for="imageInput">
+        <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+        <div id="dropPrompt" class="drop-prompt">
+          <span class="drop-icon">🖼️</span>
+          <span>Drag &amp; drop a picture, or <u>click to browse</u></span>
+          <small>PNG, JPEG or WebP &middot; up to 15 MB</small>
+        </div>
+        <img id="preview" class="preview" alt="Selected image preview" hidden />
+      </label>
+
+      <!-- Prompt -->
+      <label class="field">
+        <span>Motion prompt</span>
+        <textarea id="prompt" rows="2" required
+          placeholder="The camera slowly pushes in as the clouds drift and light shifts to golden hour."></textarea>
+      </label>
+
+      <!-- Options -->
+      <div class="options">
+        <label class="field">
+          <span>Duration: <b id="durationLabel">5s</b></span>
+          <input id="duration" type="range" min="1" max="15" value="5" />
+        </label>
+        <label class="field">
+          <span>Resolution</span>
+          <select id="resolution">
+            <option value="720p" selected>720p</option>
+            <option value="480p">480p</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Aspect ratio</span>
+          <select id="aspectRatio">
+            <option value="16:9" selected>16:9 (landscape)</option>
+            <option value="9:16">9:16 (portrait)</option>
+            <option value="1:1">1:1 (square)</option>
+            <option value="4:3">4:3</option>
+            <option value="3:4">3:4</option>
+          </select>
+        </label>
+      </div>
+
+      <button id="submitBtn" type="submit" disabled>Generate video</button>
+    </form>
+
+    <!-- Status / result -->
+    <section id="result" class="result" hidden>
+      <div id="progress" class="progress" hidden>
+        <div class="spinner"></div>
+        <span id="progressText">Submitting&hellip;</span>
+      </div>
+      <div id="errorBox" class="error-box" hidden></div>
+      <div id="videoWrap" hidden>
+        <video id="video" controls playsinline></video>
+        <div class="actions">
+          <a id="downloadLink" class="btn-secondary" download>⬇ Download .mp4</a>
+          <button id="resetBtn" type="button" class="btn-secondary">↺ New video</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

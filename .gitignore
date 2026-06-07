@@ -1,0 +1,20 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# Generated media / scratch
+*.mp4
+outputs/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
