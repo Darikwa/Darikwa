@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ÉLAN — Luxury Organic Candles for Training &amp; Recovery</title>
+  <meta name="description" content="Hand-poured luxury organic candles crafted for the athlete's ritual. Organic coconut-soy wax, pure essential oils, 60-hour burn. Ignite. Restore. Rest." />
+  <meta property="og:title" content="ÉLAN — Luxury Organic Candles" />
+  <meta property="og:description" content="Light the fire within. Hand-poured organic candles for focus, recovery and deep rest." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯️</text></svg>" />
+</head>
+<body>
+
+  <!-- Announcement bar -->
+  <div class="announce" role="region" aria-label="Announcement">
+    <p>Complimentary shipping on orders over $75 &nbsp;·&nbsp; Hand-poured weekly in small batches</p>
+  </div>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <nav class="nav__inner" aria-label="Main navigation">
+      <a class="nav__brand" href="#top">ÉLAN<span class="nav__brand-dot">.</span></a>
+      <ul class="nav__links">
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#craft">Craft</a></li>
+        <li><a href="#ritual">Ritual</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="#collection" class="btn btn--small">Shop now</a>
+        <button class="nav__cart" id="cartBtn" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 7h12l-1.2 12.2a1.8 1.8 0 0 1-1.8 1.6H9a1.8 1.8 0 0 1-1.8-1.6L6 7Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+          <span class="nav__cart-count" id="cartCount" aria-live="polite">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="hero__copy reveal">
+          <p class="eyebrow">Organic · Hand-poured · Small batch</p>
+          <h1 class="hero__title">
+            Light the fire<br /><em>within.</em>
+          </h1>
+          <p class="hero__sub">
+            Luxury organic candles crafted for the moments that shape you —
+            the focus before, the calm after, the rest that rebuilds.
+            Pure coconut-soy wax. Nothing synthetic. Ever.
+          </p>
+          <div class="hero__cta">
+            <a href="#collection" class="btn btn--primary">Shop the collection</a>
+            <a href="#craft" class="btn btn--ghost">Our craft</a>
+          </div>
+          <ul class="hero__proof" aria-label="Trust highlights">
+            <li><strong>4.9★</strong> 2,300+ reviews</li>
+            <li><strong>60h</strong> clean burn</li>
+            <li><strong>100%</strong> organic oils</li>
+          </ul>
+        </div>
+
+        <div class="hero__visual reveal" aria-hidden="true">
+          <div class="candle">
+            <div class="candle__flame-wrap">
+              <div class="candle__light"></div>
+              <div class="candle__flame"></div>
+              <div class="candle__wick"></div>
+            </div>
+            <div class="candle__vessel">
+              <span class="candle__label">ÉLAN</span>
+              <span class="candle__scent">N°02 — RESTORE</span>
+            </div>
+            <div class="candle__shadow"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Organic coconut-soy wax</span><i>✦</i>
+        <span>GOTS-certified essential oils</span><i>✦</i>
+        <span>Lead-free cotton wicks</span><i>✦</i>
+        <span>Recycled glass vessels</span><i>✦</i>
+        <span>Hand-poured in small batches</span><i>✦</i>
+        <span>Organic coconut-soy wax</span><i>✦</i>
+        <span>GOTS-certified essential oils</span><i>✦</i>
+        <span>Lead-free cotton wicks</span><i>✦</i>
+        <span>Recycled glass vessels</span><i>✦</i>
+        <span>Hand-poured in small batches</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ============ COLLECTION ============ -->
+    <section class="section" id="collection">
+      <div class="section__head reveal">
+        <p class="eyebrow">The collection</p>
+        <h2>Three candles.<br /><em>One complete ritual.</em></h2>
+        <p class="section__lede">
+          Each scent is composed by a master perfumer to match a phase of your
+          day — sharpen before you move, unwind after, and sink into recovery.
+        </p>
+      </div>
+
+      <div class="products">
+        <!-- IGNITE -->
+        <article class="product reveal" data-name="Ignite N°01" data-price="58">
+          <div class="product__visual product__visual--ignite">
+            <span class="product__no">N°01</span>
+            <div class="mini-candle"><div class="mini-candle__flame"></div></div>
+          </div>
+          <div class="product__body">
+            <div class="product__row">
+              <h3>Ignite</h3>
+              <p class="product__price">$58</p>
+            </div>
+            <p class="product__mood">Pre-movement · Focus</p>
+            <p class="product__notes">Eucalyptus · Peppermint · Black pepper</p>
+            <p class="product__desc">
+              A bright, sharpening blend that clears the mind before you train,
+              create, or compete.
+            </p>
+            <button class="btn btn--primary btn--full add-to-cart">Add to cart — $58</button>
+          </div>
+        </article>
+
+        <!-- RESTORE -->
+        <article class="product product--featured reveal" data-name="Restore N°02" data-price="58">
+          <p class="product__badge">Bestseller</p>
+          <div class="product__visual product__visual--restore">
+            <span class="product__no">N°02</span>
+            <div class="mini-candle"><div class="mini-candle__flame"></div></div>
+          </div>
+          <div class="product__body">
+            <div class="product__row">
+              <h3>Restore</h3>
+              <p class="product__price">$58</p>
+            </div>
+            <p class="product__mood">Post-movement · Calm</p>
+            <p class="product__notes">Lavender · Sandalwood · Bergamot</p>
+            <p class="product__desc">
+              Warm and grounding — the exhale after effort. Light it while you
+              stretch, soak, or simply sit still.
+            </p>
+            <button class="btn btn--primary btn--full add-to-cart">Add to cart — $58</button>
+          </div>
+        </article>
+
+        <!-- REST -->
+        <article class="product reveal" data-name="Rest N°03" data-price="58">
+          <div class="product__visual product__visual--rest">
+            <span class="product__no">N°03</span>
+            <div class="mini-candle"><div class="mini-candle__flame"></div></div>
+          </div>
+          <div class="product__body">
+            <div class="product__row">
+              <h3>Rest</h3>
+              <p class="product__price">$58</p>
+            </div>
+            <p class="product__mood">Evening · Deep recovery</p>
+            <p class="product__notes">Chamomile · Vetiver · Cedarwood</p>
+            <p class="product__desc">
+              A low, velvety scent engineered for wind-down. Growth happens
+              when you rest — make it sacred.
+            </p>
+            <button class="btn btn--primary btn--full add-to-cart">Add to cart — $58</button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Bundle offer -->
+      <div class="bundle reveal" data-name="The Full Ritual Set" data-price="148">
+        <div class="bundle__copy">
+          <p class="eyebrow eyebrow--light">Most loved</p>
+          <h3>The Full Ritual Set</h3>
+          <p>All three candles, boxed in our signature gift packaging with a ritual guide. The complete arc — focus, calm, recovery.</p>
+        </div>
+        <div class="bundle__buy">
+          <p class="bundle__price"><s>$174</s> <strong>$148</strong> <span class="bundle__save">Save $26</span></p>
+          <button class="btn btn--gold add-to-cart">Add the set to cart</button>
+          <p class="bundle__note">Free shipping included · 30-day flame-out guarantee</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CRAFT ============ -->
+    <section class="section section--dark" id="craft">
+      <div class="craft__grid">
+        <div class="craft__copy reveal">
+          <p class="eyebrow eyebrow--light">The craft</p>
+          <h2>What "organic"<br /><em>actually means here.</em></h2>
+          <p>
+            Most "natural" candles are paraffin blends with synthetic
+            fragrance. Ours are not. Every ÉLAN candle is poured by hand from
+            certified-organic coconut and soy wax, scented exclusively with
+            GOTS-certified essential oils, and finished with a lead-free
+            cotton wick in a recycled glass vessel.
+          </p>
+          <p>
+            No paraffin. No phthalates. No dyes. No shortcuts. Just a clean,
+            even, 60-hour burn that leaves nothing behind but the scent.
+          </p>
+        </div>
+        <ul class="craft__facts reveal" aria-label="Craft facts">
+          <li>
+            <span class="craft__num">01</span>
+            <h3>Organic coconut-soy wax</h3>
+            <p>Slow-burning, soot-free, and sourced from certified-organic farms.</p>
+          </li>
+          <li>
+            <span class="craft__num">02</span>
+            <h3>Pure essential oils</h3>
+            <p>Perfumer-composed blends. Zero synthetic fragrance, zero phthalates.</p>
+          </li>
+          <li>
+            <span class="craft__num">03</span>
+            <h3>Hand-poured weekly</h3>
+            <p>Small batches of 200, cured for 14 days before they ship.</p>
+          </li>
+          <li>
+            <span class="craft__num">04</span>
+            <h3>Vessels worth keeping</h3>
+            <p>Heavy recycled glass, designed to live a second life on your shelf.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ RITUAL ============ -->
+    <section class="section" id="ritual">
+      <div class="section__head reveal">
+        <p class="eyebrow">The ritual</p>
+        <h2>Built around<br /><em>how you actually live.</em></h2>
+      </div>
+      <ol class="ritual">
+        <li class="reveal">
+          <span class="ritual__time">6:00 AM</span>
+          <h3>Strike — Ignite</h3>
+          <p>Light N°01 while you lace up. Eucalyptus and peppermint cue your brain: it's time to work.</p>
+        </li>
+        <li class="reveal">
+          <span class="ritual__time">7:30 PM</span>
+          <h3>Soften — Restore</h3>
+          <p>Training done, day done. N°02's sandalwood warmth marks the switch from output to ease.</p>
+        </li>
+        <li class="reveal">
+          <span class="ritual__time">9:30 PM</span>
+          <h3>Sink — Rest</h3>
+          <p>Thirty minutes of N°03 before bed. Screens off, vetiver on, recovery begins.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ REVIEWS ============ -->
+    <section class="section section--cream" id="reviews">
+      <div class="section__head reveal">
+        <p class="eyebrow">Reviews</p>
+        <h2>4.9 out of 5.<br /><em>2,300+ rituals kept.</em></h2>
+      </div>
+      <div class="reviews">
+        <figure class="review reveal">
+          <p class="review__stars" aria-label="5 out of 5 stars">★★★★★</p>
+          <blockquote>"Restore is the first candle that actually smells expensive without smelling fake. It's part of my cooldown now — non-negotiable."</blockquote>
+          <figcaption>Maya T. — Verified buyer</figcaption>
+        </figure>
+        <figure class="review reveal">
+          <p class="review__stars" aria-label="5 out of 5 stars">★★★★★</p>
+          <blockquote>"I bought the set as a gift and immediately ordered another for myself. The packaging alone feels like a luxury house, not a candle brand."</blockquote>
+          <figcaption>Daniel K. — Verified buyer</figcaption>
+        </figure>
+        <figure class="review reveal">
+          <p class="review__stars" aria-label="5 out of 5 stars">★★★★★</p>
+          <blockquote>"Migraine-prone, so synthetic candles are off the table for me. ÉLAN burns clean for hours with zero headache. Rest knocks me out better than tea."</blockquote>
+          <figcaption>Priya S. — Verified buyer</figcaption>
+        </figure>
+      </div>
+      <div class="guarantee reveal">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        <p><strong>The 30-day flame-out guarantee.</strong> Burn it, live with it, judge it. If it isn't the finest candle you've owned, we'll refund it — no return required.</p>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section section--narrow" id="faq">
+      <div class="section__head reveal">
+        <p class="eyebrow">Questions</p>
+        <h2>Everything else<br /><em>you'd want to know.</em></h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>How long does each candle burn?</summary>
+          <p>Approximately 60 hours per candle (9.5 oz / 270 g). Burned in our recommended 2–3 hour sessions, that's two to three months of daily ritual.</p>
+        </details>
+        <details>
+          <summary>Are the scents safe around pets and kids?</summary>
+          <p>Our blends use low, IFRA-compliant concentrations of pure essential oils and contain no synthetic fragrance or phthalates. As with any candle, burn in a ventilated room and keep out of reach.</p>
+        </details>
+        <details>
+          <summary>Where are they made?</summary>
+          <p>Every candle is hand-poured in our studio in small weekly batches of 200, then cured for 14 days so the scent throws fully from the first light.</p>
+        </details>
+        <details>
+          <summary>What if I don't love it?</summary>
+          <p>Our 30-day flame-out guarantee covers you: if you're not delighted, we refund you in full and you keep the candle. We'll also help you pick a better-suited scent.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ EMAIL CAPTURE ============ -->
+    <section class="section section--dark capture">
+      <div class="capture__inner reveal">
+        <p class="eyebrow eyebrow--light">Join the ritual</p>
+        <h2>10% off your first set.<br /><em>Plus early access to limited pours.</em></h2>
+        <form class="capture__form" id="captureForm" novalidate>
+          <label class="sr-only" for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+          <button type="submit" class="btn btn--gold">Claim 10% off</button>
+        </form>
+        <p class="capture__fine" id="captureMsg">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__logo">ÉLAN<span>.</span></p>
+        <p>Luxury organic candles for the athlete's ritual. Hand-poured, small-batch, nothing synthetic.</p>
+      </div>
+      <nav class="footer__col" aria-label="Shop">
+        <h3>Shop</h3>
+        <a href="#collection">Ignite N°01</a>
+        <a href="#collection">Restore N°02</a>
+        <a href="#collection">Rest N°03</a>
+        <a href="#collection">The Full Ritual Set</a>
+      </nav>
+      <nav class="footer__col" aria-label="Company">
+        <h3>Company</h3>
+        <a href="#craft">Our craft</a>
+        <a href="#ritual">The ritual</a>
+        <a href="#faq">FAQ</a>
+        <a href="#reviews">Reviews</a>
+      </nav>
+      <div class="footer__col">
+        <h3>Contact</h3>
+        <a href="mailto:hello@elancandles.com">hello@elancandles.com</a>
+        <p class="footer__small">Mon–Fri, 9–5 ET</p>
+      </div>
+    </div>
+    <p class="footer__legal">© 2026 ÉLAN Candle Co. All rights reserved. Burn responsibly — never leave a flame unattended.</p>
+  </footer>
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta" id="stickyCta">
+    <p><strong>The Full Ritual Set</strong> · $148</p>
+    <a href="#collection" class="btn btn--gold btn--small">Shop</a>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
