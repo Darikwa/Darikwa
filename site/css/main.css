@@ -1,0 +1,470 @@
+/* ==========================================================================
+   Darikwa — landing page
+   Quiet luxury: cream & ink, champagne gold, serif display, hairline rules.
+   No frameworks, no build step.
+   ========================================================================== */
+
+:root {
+  --cream: #f4efe7;
+  --cream-deep: #ece5d8;
+  --ink: #181410;
+  --ink-soft: #221d17;
+  --stone: #6a6052;
+  --gold: #a8853b;
+  --gold-soft: rgba(168, 133, 59, 0.45);
+  --hair: rgba(24, 20, 16, 0.14);
+  --hair-light: rgba(244, 239, 231, 0.16);
+  --font-display: "Fraunces", "Times New Roman", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --pad: clamp(1.25rem, 4vw, 4.5rem);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection { background: var(--gold); color: var(--cream); }
+
+img, canvas { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+strong { font-weight: 500; }
+
+.ital { font-family: var(--font-display); font-style: italic; font-weight: 300; }
+
+/* ---------- accessibility ---------- */
+
+.skip-link {
+  position: absolute; left: -200vw; top: 0;
+  background: var(--ink); color: var(--cream);
+  padding: 0.75rem 1.25rem; z-index: 100;
+  text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+
+/* ---------- chrome ---------- */
+
+.progress {
+  position: fixed; inset: 0 0 auto 0; height: 1px; z-index: 60;
+  pointer-events: none;
+}
+.progress span {
+  display: block; height: 100%; width: 100%;
+  background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+}
+
+.cursor {
+  position: fixed; top: 0; left: 0; z-index: 70;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid var(--gold-soft);
+  pointer-events: none;
+  transform: translate(-100px, -100px);
+  transition: width 0.45s var(--ease), height 0.45s var(--ease),
+              border-color 0.45s;
+}
+.cursor.is-hover { width: 52px; height: 52px; border-color: var(--gold); }
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+/* ---------- header ---------- */
+
+.site-head {
+  position: absolute; inset: 0 0 auto 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; padding: 1.6rem var(--pad);
+}
+
+.brand {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 1.25rem; letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.site-head nav ul { display: flex; gap: 2.25rem; list-style: none; }
+.site-head nav a {
+  text-decoration: none; font-size: 0.82rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--stone);
+  transition: color 0.4s;
+}
+.site-head nav a:hover { color: var(--ink); }
+
+.status {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.82rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--stone);
+}
+.status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 3.5s ease-in-out infinite;
+}
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+@media (max-width: 760px) {
+  .site-head nav { display: none; }
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  position: relative; min-height: 100svh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: clamp(7rem, 16vh, 10rem) var(--pad) 5rem;
+}
+
+.hero-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: -1;
+}
+
+.eyebrow {
+  font-size: 0.85rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 2.25rem;
+}
+
+.hero-title {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(2.4rem, 6.4vw, 6.25rem);
+  line-height: 1.08; letter-spacing: -0.01em;
+  max-width: 22ch;
+}
+.hero-title .line { display: block; }
+.hero-title .ital { color: var(--gold); font-weight: 300; }
+
+.hero-sub {
+  max-width: 38rem; margin-top: 2.25rem; color: var(--stone);
+  font-size: clamp(1.1rem, 1.1rem + 0.4vw, 1.35rem); line-height: 1.7;
+}
+.hero-sub strong { color: var(--ink); }
+
+.hero-cta {
+  margin-top: 2.75rem; display: flex; align-items: center;
+  justify-content: center; gap: 2rem; flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--ink); color: var(--ink);
+  background: transparent;
+  font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase;
+  text-decoration: none; border-radius: 999px;
+  padding: 1.05rem 2.4rem;
+  transition: background 0.6s var(--ease), color 0.6s var(--ease);
+}
+.btn:hover { background: var(--ink); color: var(--cream); }
+
+.btn-light { border-color: var(--cream); color: var(--cream); }
+.btn-light:hover { background: var(--cream); color: var(--ink); }
+
+.btn-big { font-size: clamp(0.85rem, 1.6vw, 1.05rem); padding: 1.3rem 3rem; }
+
+.link-plain {
+  color: var(--stone); text-decoration: none;
+  font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase;
+  border-bottom: 1px solid var(--hair);
+  padding-bottom: 4px;
+  transition: color 0.4s, border-color 0.4s;
+}
+.link-plain:hover { color: var(--gold); border-color: var(--gold); }
+
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+}
+.scroll-line {
+  display: block; width: 1px; height: 4rem;
+  background: var(--hair);
+  position: relative; overflow: hidden;
+}
+.scroll-line::after {
+  content: ""; position: absolute; inset: 0;
+  background: var(--gold);
+  animation: drip 3.2s var(--ease) infinite;
+}
+@keyframes drip {
+  0% { transform: translateY(-100%); }
+  55%, 100% { transform: translateY(100%); }
+}
+
+/* ---------- parting cloud ----------
+   A gathered mass of materials and references that parts down the middle
+   as the visitor scrolls through it. The .part-on class (and therefore the
+   pinned scroll height) is only added by JS once the effect is live, so
+   without JS this is simply a handsome static word cloud. */
+
+.part { position: relative; border-block: 1px solid var(--hair); }
+.part.part-on { height: 240vh; border-block: none; }
+
+.part-stage {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 70vh; padding: 4rem var(--pad);
+  position: relative;
+}
+.part-on .part-stage {
+  position: sticky; top: 0; height: 100svh; min-height: 0;
+  overflow: clip;
+}
+
+.part-edge {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 0.85rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); white-space: nowrap;
+}
+.part-edge-l { left: var(--pad); }
+.part-edge-r { right: var(--pad); }
+.part-on .part-edge { opacity: 0.25; }
+
+.part-cloud {
+  list-style: none;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: baseline; gap: 0.5rem 1.6rem;
+  max-width: 46rem; text-align: center;
+}
+.part-cloud li { will-change: transform; }
+
+.w-lg {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(1.9rem, 4.2vw, 3.4rem); line-height: 1.15;
+}
+.w-md {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.35rem, 2.8vw, 2.2rem); line-height: 1.2;
+}
+.w-it {
+  font-family: var(--font-display); font-style: italic; font-weight: 300;
+  font-size: clamp(1.55rem, 3.2vw, 2.6rem); line-height: 1.2;
+  color: var(--gold);
+}
+.w-sc {
+  font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--stone);
+}
+
+/* ---------- statement (scroll-scrubbed) ---------- */
+
+.statement {
+  padding: clamp(6rem, 16vh, 11rem) var(--pad);
+  display: flex; justify-content: center;
+}
+.statement p {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.7rem, 3.8vw, 3.4rem);
+  line-height: 1.32; letter-spacing: -0.01em;
+  max-width: 26ch; text-align: center;
+}
+/* words start faint and fill to ink as the visitor scrolls through;
+   JS drives opacity, so without JS the paragraph is simply fully legible */
+.js .statement .scrub-word {
+  opacity: 0.16;
+  will-change: opacity;
+}
+
+/* ---------- chapters ---------- */
+
+.chapter {
+  padding: clamp(5.5rem, 13vh, 9.5rem) var(--pad);
+  position: relative;
+}
+
+.bordered { border-top: 1px solid var(--hair); }
+
+.chapter-no {
+  font-family: var(--font-display); font-weight: 300; font-style: italic;
+  font-size: 1rem; letter-spacing: 0.35em;
+  color: var(--gold); margin-bottom: 2rem;
+}
+
+.chapter-title {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.9rem, 4.4vw, 3.9rem);
+  line-height: 1.12; letter-spacing: -0.01em;
+  max-width: 22ch; margin-bottom: clamp(2.25rem, 6vh, 4rem);
+}
+
+.dark {
+  background: var(--ink); color: var(--cream);
+}
+.dark .chapter-no { color: var(--gold); }
+.dark .link-plain { border-color: var(--hair-light); color: rgba(244, 239, 231, 0.75); }
+.dark .link-plain:hover { color: var(--gold); border-color: var(--gold); }
+
+.chapter-body { max-width: 46rem; }
+.chapter-body p + p { margin-top: 1.4rem; }
+
+.lede {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.2rem, 2.1vw, 1.55rem); line-height: 1.5;
+}
+
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 2.25rem; margin-top: 3.75rem;
+  border-top: 1px solid var(--hair); padding-top: 2.25rem;
+}
+.stats dt {
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em;
+  color: var(--stone); margin-bottom: 0.6rem;
+}
+.stats dd {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.25rem, 2.4vw, 1.8rem); line-height: 1.2;
+}
+
+/* ---------- services ---------- */
+
+.services { list-style: none; border-top: 1px solid var(--hair); }
+
+.service {
+  display: grid; grid-template-columns: 4.5rem 1fr 1.4fr;
+  gap: 1.75rem; align-items: baseline;
+  padding: 2.5rem 0; border-bottom: 1px solid var(--hair);
+}
+
+.service-no {
+  font-family: var(--font-display); font-style: italic;
+  color: var(--gold); font-size: 1rem;
+}
+
+.service h3 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(1.25rem, 2.3vw, 1.8rem); line-height: 1.2;
+  transition: color 0.5s;
+}
+.service:hover h3 { color: var(--gold); }
+.service p { color: var(--stone); max-width: 36rem; }
+
+@media (max-width: 880px) {
+  .service { grid-template-columns: 3rem 1fr; }
+  .service p { grid-column: 2; }
+}
+
+/* ---------- lab ---------- */
+
+.lab-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  gap: 1.5rem;
+}
+
+.lab-card {
+  border: 1px solid var(--hair-light);
+  padding: clamp(1.75rem, 3.5vw, 3rem);
+  display: flex; flex-direction: column; gap: 1.1rem;
+  transition: border-color 0.6s var(--ease), background 0.6s var(--ease);
+}
+.lab-card:hover { border-color: var(--gold-soft); background: var(--ink-soft); }
+
+.lab-tag {
+  font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold);
+}
+.lab-card h3 {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.4rem, 2.8vw, 2rem); line-height: 1.15;
+}
+.lab-card p { color: rgba(244, 239, 231, 0.78); flex-grow: 1; }
+.lab-card .link-plain { align-self: flex-start; }
+
+/* ---------- faq ---------- */
+
+.faq { max-width: 50rem; border-top: 1px solid var(--hair); }
+
+.faq details { border-bottom: 1px solid var(--hair); }
+
+.faq summary {
+  cursor: pointer; list-style: none;
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(1.1rem, 2.1vw, 1.45rem);
+  padding: 1.6rem 3rem 1.6rem 0;
+  position: relative; transition: color 0.4s;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; position: absolute; right: 0.25rem; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display); font-weight: 300;
+  color: var(--gold); font-size: 1.4em;
+  transition: transform 0.45s var(--ease);
+}
+.faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq summary:hover { color: var(--gold); }
+.faq details p { color: var(--stone); padding: 0 0 1.9rem; max-width: 44rem; }
+
+/* ---------- contact ---------- */
+
+.contact { text-align: center; padding-block: clamp(7.5rem, 18vh, 12rem); }
+
+.contact-title {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(2.3rem, 6vw, 5.75rem);
+  line-height: 1.08; letter-spacing: -0.01em;
+  margin-bottom: 2.25rem;
+}
+.contact-title span { display: block; }
+.contact-title .ital { color: var(--gold); }
+
+.contact > p { color: rgba(244, 239, 231, 0.78); }
+.contact .btn-big { margin-top: 2.75rem; }
+.contact-meta {
+  margin-top: 2.25rem; font-size: 0.82rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(244, 239, 231, 0.65);
+}
+
+/* ---------- footer ---------- */
+
+.site-foot {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  justify-content: space-between; align-items: center;
+  padding: 2.25rem var(--pad);
+  border-top: 1px solid var(--hair-light);
+  font-size: 0.88rem; color: rgba(244, 239, 231, 0.65);
+}
+
+/* ---------- motion: reveals & split text ----------
+   All gated on .js so content is fully visible without JavaScript
+   (and to every crawler). */
+
+.js .reveal {
+  opacity: 0; transform: translateY(1.4rem);
+  transition: opacity 1.3s var(--ease), transform 1.3s var(--ease);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+.js [data-split] .word {
+  display: inline-block; overflow: hidden; vertical-align: bottom;
+  padding-bottom: 0.08em; margin-bottom: -0.08em;
+}
+.js [data-split] .word > span {
+  display: inline-block;
+  transform: translateY(108%);
+  transition: transform 1.4s var(--ease);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.js [data-split].is-in .word > span { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+  .js [data-split] .word > span { transform: none; }
+  .hero-canvas, .cursor { display: none; }
+}
