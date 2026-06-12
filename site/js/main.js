@@ -14,8 +14,7 @@
   /* ---------- split headings into animatable words ----------
      The original text stays in the DOM as plain words, so crawlers and
      screen readers see normal content. */
-  const splitTargets = document.querySelectorAll("[data-split]");
-  splitTargets.forEach((el) => {
+  document.querySelectorAll("[data-split]").forEach((el) => {
     const words = el.textContent.trim().split(/\s+/);
     el.textContent = "";
     words.forEach((word, i) => {
@@ -40,11 +39,11 @@
         }
       });
     },
-    { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+    { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
   );
   document.querySelectorAll(".reveal, [data-split]").forEach((el) => io.observe(el));
 
-  /* ---------- reading progress bar ---------- */
+  /* ---------- reading progress hairline ---------- */
   const bar = document.getElementById("progressBar");
   let progressTicking = false;
   const paintProgress = () => {
@@ -65,7 +64,7 @@
   );
   paintProgress();
 
-  /* ---------- custom cursor + magnetic buttons ---------- */
+  /* ---------- cursor ring (gentle, heavily damped) ---------- */
   const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   if (fine && !reduceMotion) {
     const cursor = document.getElementById("cursor");
@@ -74,9 +73,9 @@
     window.addEventListener("pointermove", (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
 
     (function followCursor() {
-      cx += (tx - cx) * 0.2;
-      cy += (ty - cy) * 0.2;
-      cursor.style.transform = `translate(${cx - 6}px, ${cy - 6}px)`;
+      cx += (tx - cx) * 0.1;
+      cy += (ty - cy) * 0.1;
+      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
       requestAnimationFrame(followCursor);
     })();
 
@@ -84,31 +83,23 @@
       el.addEventListener("pointerenter", () => cursor.classList.add("is-hover"));
       el.addEventListener("pointerleave", () => cursor.classList.remove("is-hover"));
     });
-
-    document.querySelectorAll(".magnetic").forEach((el) => {
-      const strength = 0.3;
-      el.addEventListener("pointermove", (e) => {
-        const r = el.getBoundingClientRect();
-        const dx = e.clientX - (r.left + r.width / 2);
-        const dy = e.clientY - (r.top + r.height / 2);
-        el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
-      });
-      el.addEventListener("pointerleave", () => { el.style.transform = ""; });
-    });
   }
 
-  /* ---------- hero constellation ----------
-     A drifting field of nodes linked when close — a small nod to the
-     "neural" theme. Pauses off-screen, skipped entirely for reduced
-     motion or data-saver. */
+  /* ---------- hero silk threads ----------
+     A handful of slow sine-layered curves in champagne gold — deterministic,
+     cheap to draw, perfectly smooth. The pointer adds a soft, heavily damped
+     drift. Pauses off-screen; skipped for reduced motion or data-saver. */
   if (!reduceMotion && !saveData) {
-    const canvas = document.getElementById("field");
+    const canvas = document.getElementById("silk");
     const ctx = canvas.getContext("2d");
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    let w = 0, h = 0, nodes = [], running = false, rafId = 0;
-    const pointer = { x: -1e4, y: -1e4 };
-    const LINK = 130;
+    let w = 0, h = 0, running = false, rafId = 0;
+    const THREADS = 11;
+    const STEP = 10; // px between sampled points along each curve
+
+    // damped pointer influence, normalised to [-1, 1]
+    const drift = { x: 0, y: 0, tx: 0, ty: 0 };
 
     const resize = () => {
       w = canvas.offsetWidth;
@@ -116,57 +107,37 @@
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const target = Math.min(110, Math.floor((w * h) / 16000));
-      nodes = Array.from({ length: target }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        r: Math.random() * 1.6 + 0.6,
-      }));
     };
 
-    const step = () => {
+    const step = (now) => {
+      const t = now * 0.00012; // very slow clock
+      drift.x += (drift.tx - drift.x) * 0.02;
+      drift.y += (drift.ty - drift.y) * 0.02;
+
       ctx.clearRect(0, 0, w, h);
-
-      for (const n of nodes) {
-        // gentle pull toward the pointer
-        const dx = pointer.x - n.x;
-        const dy = pointer.y - n.y;
-        const d2 = dx * dx + dy * dy;
-        if (d2 < 32000) {
-          n.vx += dx * 0.00002;
-          n.vy += dy * 0.00002;
-        }
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x < 0 || n.x > w) n.vx *= -1;
-        if (n.y < 0 || n.y > h) n.vy *= -1;
-      }
-
       ctx.lineWidth = 1;
-      for (let i = 0; i < nodes.length; i++) {
-        const a = nodes[i];
-        for (let j = i + 1; j < nodes.length; j++) {
-          const b = nodes[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const dist = Math.hypot(dx, dy);
-          if (dist < LINK) {
-            ctx.strokeStyle = `rgba(216, 255, 61, ${0.14 * (1 - dist / LINK)})`;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        }
-      }
 
-      ctx.fillStyle = "rgba(242, 239, 230, 0.5)";
-      for (const n of nodes) {
+      for (let i = 0; i < THREADS; i++) {
+        const f = i / (THREADS - 1);
+        const baseY = h * (0.12 + 0.76 * f);
+        const amp1 = 26 + 14 * Math.sin(i * 1.7);
+        const amp2 = 12 + 6 * Math.cos(i * 2.3);
+        const phase = i * 0.9;
+        const alpha = 0.05 + 0.07 * Math.sin(f * Math.PI);
+
+        ctx.strokeStyle = `rgba(168, 133, 59, ${alpha.toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fill();
+        for (let x = -STEP; x <= w + STEP; x += STEP) {
+          const y =
+            baseY +
+            Math.sin(x * 0.0021 + t * 7 + phase) * amp1 +
+            Math.sin(x * 0.0047 - t * 4.5 + phase * 2) * amp2 +
+            drift.y * 18 * Math.sin(f * Math.PI) +
+            drift.x * 10 * Math.sin(x * 0.001 + phase);
+          if (x === -STEP) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
       }
 
       if (running) rafId = requestAnimationFrame(step);
@@ -186,14 +157,14 @@
       "pointermove",
       (e) => {
         const r = canvas.getBoundingClientRect();
-        pointer.x = e.clientX - r.left;
-        pointer.y = e.clientY - r.top;
+        drift.tx = ((e.clientX - r.left) / r.width) * 2 - 1;
+        drift.ty = ((e.clientY - r.top) / r.height) * 2 - 1;
       },
       { passive: true }
     );
     canvas.parentElement.addEventListener("pointerleave", () => {
-      pointer.x = -1e4;
-      pointer.y = -1e4;
+      drift.tx = 0;
+      drift.ty = 0;
     });
 
     let resizeTimer;
