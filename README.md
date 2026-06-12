@@ -1,3 +1,17 @@
+# Darikwa
+
+This repository contains two things:
+
+1. **[`site/`](site/)** — the **darikwa.com landing page**: a zero-framework,
+   crawler-first single page (semantic HTML + vanilla CSS/JS, no build step).
+   Deploy it by pointing any static host — GitHub Pages, Cloudflare Pages,
+   Netlify, or a plain nginx root — at the `site/` directory. Includes
+   `robots.txt`, `sitemap.xml`, an Open Graph image and JSON-LD structured data.
+   Preview locally with `python3 -m http.server -d site 8000`.
+2. The **Grok Picture-to-Video** app, documented below.
+
+---
+
 # 🎬 Grok Picture-to-Video
 
 Turn a still image into a short, animated video clip using **xAI's Grok Imagine**
