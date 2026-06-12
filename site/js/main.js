@@ -64,6 +64,114 @@
   );
   paintProgress();
 
+  /* ---------- scroll-scrubbed statement ----------
+     Words begin faint and fill to ink, one by one, as the paragraph
+     travels up the viewport. Scrubbed directly from scroll position, so
+     it tracks the reader's pace instead of playing on a timer. */
+  const scrubEls = [];
+  if (!reduceMotion) {
+    document.querySelectorAll("[data-scrub]").forEach((el) => {
+      const words = el.textContent.trim().split(/\s+/);
+      el.textContent = "";
+      const spans = words.map((word, i) => {
+        const span = document.createElement("span");
+        span.className = "scrub-word";
+        span.textContent = word;
+        el.appendChild(span);
+        if (i < words.length - 1) el.appendChild(document.createTextNode(" "));
+        return span;
+      });
+      scrubEls.push({ el, spans });
+    });
+  }
+
+  const paintScrub = () => {
+    const vh = window.innerHeight;
+    scrubEls.forEach(({ el, spans }) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      // 0 when the paragraph enters the lower viewport, 1 by its upper third
+      const progress = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.45)));
+      const filled = progress * spans.length;
+      spans.forEach((span, i) => {
+        const k = Math.min(1, Math.max(0, filled - i));
+        span.style.opacity = (0.16 + 0.84 * k).toFixed(3);
+      });
+    });
+  };
+
+  /* ---------- parting cloud ----------
+     The word cloud sits gathered in a pinned viewport; as the visitor
+     scrolls through the section, each word slides out to its own side of
+     the centre line — scrubbed from scroll position, eased both ways. */
+  const part = document.querySelector(".part");
+  let partItems = [];
+  let partEdges = [];
+
+  const initPart = () => {
+    const cloud = part.querySelector(".part-cloud");
+    const items = [...cloud.children];
+    items.forEach((li) => { li.style.transform = ""; });
+    const mid = cloud.getBoundingClientRect();
+    const centre = mid.left + mid.width / 2;
+    partItems = items.map((li, i) => {
+      const r = li.getBoundingClientRect();
+      const dx = r.left + r.width / 2 - centre;
+      const dir = dx === 0 ? (i % 2 ? 1 : -1) : Math.sign(dx);
+      const mag = 0.75 + ((i * 7919) % 97) / 97 * 0.7; // deterministic spread
+      return { li, dir, mag, width: r.width };
+    });
+  };
+
+  const paintPart = () => {
+    const vh = window.innerHeight;
+    const r = part.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > vh) return;
+    const raw = Math.min(1, Math.max(0, -r.top / (r.height - vh)));
+    // easeInOutQuad — graceful at both ends
+    const p = raw < 0.5 ? 2 * raw * raw : 1 - Math.pow(-2 * raw + 2, 2) / 2;
+    const reach = window.innerWidth / 2;
+    partItems.forEach(({ li, dir, mag, width }) => {
+      li.style.transform = `translateX(${p * dir * (reach + width) * mag}px)`;
+    });
+    partEdges.forEach((edge) => { edge.style.opacity = (0.25 + 0.75 * p).toFixed(3); });
+  };
+
+  if (part && !reduceMotion) {
+    part.classList.add("part-on");
+    partEdges = [...part.querySelectorAll(".part-edge")];
+    initPart();
+    // word widths shift once Fraunces arrives — measure again
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => { initPart(); paintScrolled(); });
+    }
+  }
+
+  /* ---------- unified scroll-scrubbed painting ---------- */
+  const paintScrolled = () => {
+    paintScrub();
+    if (part && partItems.length) paintPart();
+  };
+  let scrubTicking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!scrubTicking) {
+        scrubTicking = true;
+        requestAnimationFrame(() => {
+          paintScrolled();
+          scrubTicking = false;
+        });
+      }
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", () => {
+    if (part && partItems.length) initPart();
+    paintScrolled();
+  });
+  paintScrolled();
+
   /* ---------- cursor ring (gentle, heavily damped) ---------- */
   const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   if (fine && !reduceMotion) {
