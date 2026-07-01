@@ -18,6 +18,7 @@ The series is built to **grow with the reader**. Children who meet Niko at age
 |------|---------|
 | [`series-bible.md`](series-bible.md) | The canonical reference — characters, universe, visual style bible, franchise timeline, and book roadmap. **Read this first; it never changes.** |
 | [`books/book-01-niko-is-born.md`](books/book-01-niko-is-born.md) | **Book 1: Niko is Born** — the complete 15-page picture book (cover, page-by-page text, illustration briefs, table of contents, back cover). The canonical starting point for everything that follows. |
+| [`game/game-design-prompt.md`](game/game-design-prompt.md) | **Game design prompt** — a ready-to-use master prompt (plus design pillars) for turning the franchise into a long-form, Fable-style family adventure game where Niko ages and kindness reshapes the world. |
 
 ---
 
