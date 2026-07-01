@@ -1028,13 +1028,13 @@ function mgJump() {
 /* -- The Silent Step: sneak past napping Sensei Willow -- */
 function mgSneak() {
   return {
-    x: 480, y: 540, state: 'intro', eye: 'closed', eyeT: 2.5, t: 0,
+    x: 480, y: 455, state: 'intro', eye: 'closed', eyeT: 2.5, t: 0,
     closedBonus: (S.tries.sneak || 0) * 0.3,
     enter() {},
     key(code) {
       if (this.state === 'intro' && (code === 'Space' || code === 'Enter')) { this.state = 'play'; return; }
       if (this.state === 'spotted' && (code === 'Space' || code === 'Enter')) {
-        this.state = 'play'; this.x = 480; this.y = 540; this.eye = 'closed'; this.eyeT = 2.5;
+        this.state = 'play'; this.x = 480; this.y = 455; this.eye = 'closed'; this.eyeT = 2.5;
         return;
       }
       if (this.state === 'won' && (code === 'Space' || code === 'Enter')) {
@@ -1061,7 +1061,7 @@ function mgSneak() {
       const moving = a.x || a.y;
       if (moving) {
         this.x = U.clamp(this.x + a.x * 150 * dt, 60, 900);
-        this.y = U.clamp(this.y + a.y * 150 * dt, 130, 570);
+        this.y = U.clamp(this.y + a.y * 150 * dt, 130, 470);
         if (this.eye === 'open') {
           this.state = 'spotted';
           tryCounter('sneak');
