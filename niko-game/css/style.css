@@ -1,0 +1,246 @@
+/* Niko the Ninja That Could! — storybook UI */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #3a2e2a;
+  --paper: #fff8ec;
+  --navy: #22335f;
+  --sash: #d0342c;
+  --blossom: #f5a3c0;
+  --leaf: #7fb069;
+  --font: 'Comic Sans MS', 'Chalkboard SE', 'Segoe Print', 'Trebuchet MS', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  background: #2b3a4f;
+  font-family: var(--font);
+  color: var(--ink);
+  overflow: hidden;
+  touch-action: none;
+}
+
+#game-wrap {
+  position: relative;
+  width: min(100vw, calc(100vh * 1.6));
+  height: min(100vh, calc(100vw / 1.6));
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.45);
+  background: #9fd08a;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- HUD ---------- */
+#hud { position: absolute; inset: 0; pointer-events: none; }
+
+#quest {
+  position: absolute; top: 12px; left: 12px;
+  max-width: 320px;
+  background: rgba(255,248,236,.93);
+  border: 3px solid #d9b98c;
+  border-radius: 14px;
+  padding: 8px 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.2);
+}
+#quest-title { font-size: 13px; font-weight: bold; color: #8a5a2b; }
+#quest-obj { font-size: 14px; margin-top: 2px; }
+
+#status {
+  position: absolute; top: 12px; right: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+#age-badge {
+  background: var(--navy); color: #fff;
+  border: 3px solid #16224a;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 14px; font-weight: bold;
+  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+}
+#meter {
+  position: relative;
+  width: 190px; height: 30px;
+  background: rgba(255,248,236,.93);
+  border: 3px solid #d9b98c;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0,0,0,.2);
+}
+#meter-fill {
+  position: absolute; inset: 0;
+  width: 0%;
+  background: linear-gradient(90deg, #a8d5a2, #f5a3c0, #f78fb3);
+  transition: width .8s ease;
+}
+#meter-label {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: bold; color: #6b4a2f;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+
+#hint {
+  position: absolute; bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px; color: #fff;
+  background: rgba(43,58,79,.55);
+  padding: 3px 12px; border-radius: 999px;
+  white-space: nowrap;
+}
+
+#toasts {
+  position: absolute; top: 60px; right: 12px;
+  display: flex; flex-direction: column; gap: 6px;
+  align-items: flex-end;
+}
+.toast {
+  background: rgba(255,248,236,.96);
+  border: 2px solid var(--blossom);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 13px; font-weight: bold; color: #b04a6e;
+  box-shadow: 0 3px 8px rgba(0,0,0,.2);
+  animation: toast-in .3s ease, toast-out .6s ease 3.4s forwards;
+}
+@keyframes toast-in { from { transform: translateX(30px); opacity: 0; } }
+@keyframes toast-out { to { transform: translateY(-10px); opacity: 0; } }
+
+/* ---------- Dialogue ---------- */
+#dialog {
+  position: absolute;
+  left: 50%; bottom: 34px;
+  transform: translateX(-50%);
+  width: min(680px, 92%);
+  background: rgba(255,248,236,.97);
+  border: 4px solid #d9b98c;
+  border-radius: 18px;
+  padding: 12px 20px 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  cursor: pointer;
+}
+#dlg-name {
+  display: inline-block;
+  background: var(--navy); color: #fff;
+  font-size: 13px; font-weight: bold;
+  padding: 2px 12px; border-radius: 999px;
+  margin-top: -26px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+}
+#dlg-text { font-size: 17px; line-height: 1.45; margin-top: 6px; min-height: 48px; }
+#dlg-more {
+  position: absolute; right: 16px; bottom: 8px;
+  font-size: 14px; color: #b58a55;
+  animation: bob 1s infinite;
+}
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+
+#choices {
+  position: absolute;
+  left: 50%; bottom: 150px;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; gap: 8px;
+  width: min(480px, 88%);
+}
+#choices button {
+  font-family: var(--font);
+  font-size: 15px; font-weight: bold;
+  color: var(--ink);
+  background: rgba(255,248,236,.97);
+  border: 3px solid var(--leaf);
+  border-radius: 14px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  text-align: left;
+}
+#choices button:hover, #choices button:focus {
+  border-color: var(--sash);
+  transform: scale(1.02);
+}
+
+/* ---------- Title ---------- */
+#title {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(245,163,192,.35), transparent 40%),
+    radial-gradient(circle at 80% 85%, rgba(127,176,105,.35), transparent 40%),
+    linear-gradient(180deg, #b7e0f2 0%, #dff0d8 55%, #f9e7ee 100%);
+  border-radius: 10px;
+}
+#title-card {
+  text-align: center;
+  background: rgba(255,248,236,.94);
+  border: 5px solid #d9b98c;
+  border-radius: 26px;
+  padding: 28px 44px;
+  max-width: 560px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+}
+#title-petals { font-size: 22px; letter-spacing: 14px; }
+#title h1 {
+  font-size: 44px; line-height: 1.05;
+  color: var(--navy);
+  text-shadow: 2px 3px 0 rgba(208,52,44,.25);
+}
+#title h1 span { font-size: 26px; color: var(--sash); }
+.tagline { margin-top: 8px; font-size: 17px; color: #7a5c3e; }
+.tagline em { color: var(--sash); font-style: normal; font-weight: bold; }
+.sub { margin-top: 10px; font-size: 13.5px; line-height: 1.5; color: #5c4a3a; }
+#title-buttons { margin-top: 18px; display: flex; gap: 12px; justify-content: center; }
+#title-buttons button {
+  font-family: var(--font);
+  font-size: 18px; font-weight: bold;
+  color: #fff; background: var(--leaf);
+  border: 0; border-bottom: 5px solid #5d8a4a;
+  border-radius: 16px;
+  padding: 12px 26px;
+  cursor: pointer;
+  transition: transform .1s;
+}
+#title-buttons button:hover { transform: scale(1.05); }
+#btn-continue { background: #e08bab !important; border-bottom-color: #b06485 !important; }
+.tiny { margin-top: 14px; font-size: 11px; color: #a08a70; }
+
+/* ---------- Touch controls ---------- */
+#touch { display: none; }
+@media (pointer: coarse) {
+  #touch { display: block; }
+}
+#dpad {
+  position: absolute; left: 18px; bottom: 18px;
+  display: grid;
+  grid-template-areas: ". u ." "l . r" ". d .";
+  grid-template-columns: 52px 52px 52px;
+  grid-template-rows: 52px 52px 52px;
+  gap: 2px;
+  opacity: .82;
+}
+.tbtn {
+  font-size: 22px;
+  color: #fff;
+  background: rgba(34,51,95,.75);
+  border: 2px solid rgba(255,255,255,.5);
+  border-radius: 14px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+#abtn {
+  position: absolute; right: 26px; bottom: 44px;
+  width: 74px; height: 74px;
+  border-radius: 50%;
+  font-size: 30px;
+  background: rgba(208,52,44,.8);
+  opacity: .85;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Niko 3D — Kageyama Village</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --font: 'Comic Sans MS','Chalkboard SE','Segoe Print','Trebuchet MS',sans-serif; }
+  html, body { height: 100%; overflow: hidden; background: #1d2a3d; font-family: var(--font); touch-action: none; }
+  #c { width: 100vw; height: 100vh; display: block; }
+
+  .card {
+    background: rgba(255,248,236,.94);
+    border: 3px solid #d9b98c;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.3);
+  }
+  #objective { position: absolute; top: 12px; left: 12px; max-width: 340px; padding: 8px 14px; }
+  #objective b { font-size: 13px; color: #8a5a2b; display: block; }
+  #objective span { font-size: 14px; color: #3a2e2a; }
+  #warmth { position: absolute; top: 12px; right: 12px; padding: 7px 16px; font-size: 14px; font-weight: bold; color: #b04a6e; }
+  #hint {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    font-size: 12px; color: #fff; background: rgba(20,30,50,.55);
+    padding: 4px 14px; border-radius: 999px; white-space: nowrap;
+  }
+  #prompt {
+    position: absolute; left: 50%; bottom: 120px; transform: translateX(-50%);
+    padding: 6px 18px; font-size: 15px; font-weight: bold; color: #3a2e2a; display: none;
+  }
+  #dialog {
+    position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%);
+    width: min(660px, 92%); padding: 12px 20px 16px; display: none; cursor: pointer;
+    border-width: 4px; border-radius: 18px;
+  }
+  #dlg-name {
+    display: inline-block; background: #22335f; color: #fff; font-size: 13px; font-weight: bold;
+    padding: 2px 12px; border-radius: 999px; margin-top: -26px; box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  }
+  #dlg-text { font-size: 17px; line-height: 1.45; margin-top: 6px; min-height: 44px; color: #3a2e2a; }
+  #toast {
+    position: absolute; top: 60px; right: 12px; padding: 6px 14px;
+    font-size: 13px; font-weight: bold; color: #b04a6e;
+    border-color: #f5a3c0; display: none;
+  }
+  #title {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 30% 20%, rgba(245,163,192,.3), transparent 50%),
+                linear-gradient(180deg, rgba(29,42,61,.65), rgba(29,42,61,.85));
+  }
+  #title-card { text-align: center; padding: 30px 48px; border-radius: 24px; border-width: 5px; max-width: 540px; }
+  #title-card h1 { font-size: 38px; color: #22335f; }
+  #title-card h1 em { color: #d0342c; font-style: normal; }
+  #title-card p { margin-top: 10px; font-size: 14px; line-height: 1.5; color: #5c4a3a; }
+  #btn-start {
+    margin-top: 18px; font-family: var(--font); font-size: 18px; font-weight: bold;
+    color: #fff; background: #7fb069; border: 0; border-bottom: 5px solid #5d8a4a;
+    border-radius: 16px; padding: 12px 30px; cursor: pointer;
+  }
+  #btn-start:hover { transform: scale(1.04); }
+  a.backlink { display: inline-block; margin-top: 12px; font-size: 12px; color: #8a5a2b; }
+  #touch { display: none; }
+  @media (pointer: coarse) { #touch { display: block; } }
+  .tbtn {
+    position: absolute; font-size: 22px; color: #fff; background: rgba(34,51,95,.7);
+    border: 2px solid rgba(255,255,255,.5); border-radius: 14px; width: 54px; height: 54px;
+    user-select: none; -webkit-user-select: none; touch-action: none; opacity: .85;
+  }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="objective" class="card"><b id="obj-title">Kageyama Village · 3D</b><span id="obj-text">Walk over and say hello to the family!</span></div>
+<div id="warmth" class="card">🌸 Village Warmth: <span id="warmth-n">0</span></div>
+<div id="toast" class="card"></div>
+<div id="prompt" class="card">✦ Talk</div>
+<div id="dialog" class="card"><div id="dlg-name">Hana</div><div id="dlg-text"></div></div>
+<div id="hint">Move: WASD / Arrows · Talk: E or Space · Camera: Q / E turn · M mute</div>
+
+<div id="touch">
+  <button class="tbtn" data-k="ArrowUp"    style="left:78px;  bottom:150px;">▲</button>
+  <button class="tbtn" data-k="ArrowLeft"  style="left:20px;  bottom:92px;">◀</button>
+  <button class="tbtn" data-k="ArrowRight" style="left:136px; bottom:92px;">▶</button>
+  <button class="tbtn" data-k="ArrowDown"  style="left:78px;  bottom:34px;">▼</button>
+  <button class="tbtn" data-k="Space"      style="right:30px; bottom:80px; width:74px; height:74px; border-radius:50%; background:rgba(208,52,44,.8);">✦</button>
+</div>
+
+<div id="title">
+  <div id="title-card" class="card">
+    <div style="font-size:20px; letter-spacing:12px;">🌸 🌸 🌸</div>
+    <h1>Niko's <em>Big Secret</em> — in 3D</h1>
+    <p><b>Visual-direction prototype</b> of the book — Kageyama at golden hour in a three-quarter 3D view with
+       articulated anime-styled characters: walk cycles, blinking, breathing idles, and a cinematic dialogue camera.
+       Momo the chicken has escaped… don't chase her. <em>Bend with the wind.</em></p>
+    <button id="btn-start">🌱 Enter Kageyama</button><br>
+    <a class="backlink" href="../index.html">← back to the 2D story slice</a>
+  </div>
+</div>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>

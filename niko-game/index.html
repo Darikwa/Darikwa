@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Niko the Ninja That Could!</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="game-wrap">
+  <canvas id="canvas" width="960" height="600"></canvas>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div id="quest">
+      <div id="quest-title">Chapter 1 · Niko is Born</div>
+      <div id="quest-obj">Say hello to Mama Hana.</div>
+    </div>
+    <div id="status">
+      <div id="age-badge">Age 1</div>
+      <div id="meter" title="Village Warmth — kindness makes Kageyama blossom!">
+        <div id="meter-fill"></div>
+        <div id="meter-label">🌸 Village Warmth</div>
+      </div>
+    </div>
+    <div id="toasts"></div>
+    <div id="hint">Move: WASD / Arrows · Talk &amp; Do: E or Space · Mute: M</div>
+  </div>
+
+  <!-- Dialogue -->
+  <div id="dialog" class="hidden">
+    <div id="dlg-name">Hana</div>
+    <div id="dlg-text"></div>
+    <div id="dlg-more">▼</div>
+  </div>
+  <div id="choices" class="hidden"></div>
+
+  <!-- Title screen -->
+  <div id="title">
+    <div id="title-card">
+      <div id="title-petals">🌸 🌸 🌸</div>
+      <h1>Niko<br><span>the Ninja That Could!</span></h1>
+      <p class="tagline">“Maybe I can’t do it <em>yet</em>…”</p>
+      <p class="sub">A cosy adventure about trying, kindness, and growing up
+        in the hidden village of Kageyama. No fighting — a strong ninja
+        helps others rise!</p>
+      <div id="title-buttons">
+        <button id="btn-new">🌱 New Adventure</button>
+        <button id="btn-continue" class="hidden">🌸 Continue</button>
+      </div>
+      <p class="tiny">Vertical slice · Books 1–3 + side stories · Rated E / PEGI 3</p>
+      <p class="tiny"><a href="3d/index.html" style="color:#b04a6e; font-size:13px; font-weight:bold;">🎥 New: try the 3D visual-direction prototype →</a></p>
+    </div>
+  </div>
+
+  <!-- Touch controls -->
+  <div id="touch">
+    <div id="dpad">
+      <button class="tbtn" data-k="ArrowUp"    style="grid-area:u">▲</button>
+      <button class="tbtn" data-k="ArrowLeft"  style="grid-area:l">◀</button>
+      <button class="tbtn" data-k="ArrowRight" style="grid-area:r">▶</button>
+      <button class="tbtn" data-k="ArrowDown"  style="grid-area:d">▼</button>
+    </div>
+    <button class="tbtn" id="abtn" data-k="Space">✦</button>
+  </div>
+</div>
+
+<script src="js/engine.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

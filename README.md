@@ -1,3 +1,7 @@
+> 🥷🌸 **Also in this repo:** [`niko-game/`](niko-game/) — *Niko the Ninja
+> That Could!*, a playable vertical slice of the non-violent family adventure
+> game. Open `niko-game/index.html` in a browser to play.
+
 # 🎬 Grok Picture-to-Video
 
 Turn a still image into a short, animated video clip using **xAI's Grok Imagine**
