@@ -3,6 +3,8 @@ name: Deploy Pac-Swipe to GitHub Pages
 on:
   push:
     branches:
+      - main
+      - master
       - claude/mobile-pacman-game-9irqrv
       - claude/grok-picture-to-video-R7Y0C
   workflow_dispatch:
